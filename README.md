@@ -35,10 +35,10 @@ npx expo install expo-router react-native-safe-area-context react-native-screens
 npm i firebase
 
 # 3) 실행
-android   |	npx expo start --android | 에뮬레이터나 연결된 기기에서 즉시 실행
-iOS	      | npx expo start --ios     | macOS 환경에서 시뮬레이터 실행 시
-웹	      | npx expo start --web     | 브라우저에서 실행
-통합      | npx expo start           | QR 코드와 함께 선택 메뉴(a, i, w) 노출
+android     |	npx expo start --android | 에뮬레이터나 연결된 기기에서 즉시 실행
+iOS	        | npx expo start --ios     | macOS 환경에서 시뮬레이터 실행 시
+web	        | npx expo start --web     | 브라우저에서 실행
+Integration | npx expo start           | QR 코드와 함께 선택 메뉴(a, i, w) 노출
 ```
 
 ---

@@ -4,12 +4,15 @@ import { auth } from "@/src/lib/firebase";
 import { showAlert } from "@/src/utils/alert";
 import { useNavigation, useRouter } from "expo-router";
 import { signOut } from "firebase/auth";
+import { useLayoutEffect } from "react";
 import { Pressable, Text, View } from "react-native";
 
 export default function Settings() {
   const router = useRouter();
   const navigation = useNavigation();
-  navigation.setOptions({ title: "설정" });
+  useLayoutEffect(() => {
+    navigation.setOptions({ title: "설정" });
+  }, [navigation]);
 
   const { user } = useAuth();
 

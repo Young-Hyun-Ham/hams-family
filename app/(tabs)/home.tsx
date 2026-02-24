@@ -5,7 +5,7 @@ import { db } from "@/src/lib/firebase";
 import { showAlert } from "@/src/utils/alert";
 import { useNavigation, useRouter } from "expo-router";
 import { doc, onSnapshot } from "firebase/firestore";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import {
   ActivityIndicator,
   Linking,
@@ -25,7 +25,9 @@ import Markdown from "react-native-markdown-display";
 export default function Home() {
   const router = useRouter();
   const navigation = useNavigation();
-  navigation.setOptions({ title: "홈" });
+  useLayoutEffect(() => {
+    navigation.setOptions({ title: "홈" });
+  }, [navigation]);
   const { user } = useAuth();
 
   const [family, setFamily] = useState<FamilyDoc | null>(null);

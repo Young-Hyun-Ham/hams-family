@@ -7,13 +7,15 @@ import {
 import { findUserByEmail } from "@/src/features/user/userRepo";
 import { showAlert } from "@/src/utils/alert";
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 
 export default function InviteRoomModal() {
   const router = useRouter();
   const navigation = useNavigation();
-  navigation.setOptions({ title: "맴버초대" });
+  useLayoutEffect(() => {
+    navigation.setOptions({ title: "맴버초대" });
+  }, [navigation]);
 
   const { user } = useAuth();
 

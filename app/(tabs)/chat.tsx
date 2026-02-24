@@ -8,7 +8,7 @@ import {
 import { ChatRoom } from "@/src/features/chat/types";
 import { auth } from "@/src/lib/firebase";
 import { useNavigation, useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { FlatList, Pressable, Text, View } from "react-native";
 
 function formatTime(ts?: number) {
@@ -23,7 +23,9 @@ export default function ChatList() {
   console.log("uid:", auth.currentUser?.uid);
   const router = useRouter();
   const navigation = useNavigation();
-  navigation.setOptions({ title: "채팅" });
+  useLayoutEffect(() => {
+    navigation.setOptions({ title: "채팅" });
+  }, [navigation]);
 
   const [rooms, setRooms] = useState<ChatRoom[]>([]);
   const { user } = useAuth();

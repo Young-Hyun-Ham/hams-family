@@ -2,12 +2,14 @@
 import { useAuth } from "@/src/features/auth/AuthProvider";
 import { createPost } from "@/src/features/posts/postRepo";
 import { useNavigation } from "expo-router";
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { Alert, Pressable, Text, TextInput, View } from "react-native";
 
 export default function PostNew() {
   const navigation = useNavigation();
-  navigation.setOptions({ title: "작성" });
+  useLayoutEffect(() => {
+    navigation.setOptions({ title: "작성" });
+  }, [navigation]);
 
   const { user } = useAuth();
   const [title, setTitle] = useState("");

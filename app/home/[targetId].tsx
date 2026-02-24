@@ -5,7 +5,7 @@ import { db } from "@/src/lib/firebase"; // 프로젝트에서 db export 경로�
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 import { doc, onSnapshot } from "firebase/firestore";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import {
   ActivityIndicator,
   Linking,
@@ -51,9 +51,9 @@ export default function UserfamScreen() {
 
   useEffect(() => {
     // 타이틀 변경
-    navigation.setOptions({
-      title: `${family?.name} 팸에 오신걸 환영합니다.`,
-    });
+    useLayoutEffect(() => {
+      navigation.setOptions({ title: `${family?.name} 팸에 오신걸 환영합니다.` });
+    }, [navigation]);
   }, [family]);
 
   const md = family?.bodyMarkdown ?? "";

@@ -7,7 +7,7 @@ import {
 } from "@/src/features/chat/chatRepo";
 import type { ChatMessage } from "@/src/features/chat/types";
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import {
   FlatList,
   KeyboardAvoidingView,
@@ -50,7 +50,9 @@ export default function ChatRoomScreen() {
       const title = String(data?.title ?? "채팅");
 
       setRoomTitle(title);
-      navigation.setOptions({ title });
+      useLayoutEffect(() => {
+        navigation.setOptions({ title });
+      }, [navigation]);
     });
 
     return () => unsub();

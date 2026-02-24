@@ -3,7 +3,7 @@ import { auth } from "@/src/lib/firebase";
 import { showAlert } from "@/src/utils/alert";
 import { useNavigation, useRouter } from "expo-router";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 
 function prettyAuthError(e: any) {
@@ -16,7 +16,10 @@ function prettyAuthError(e: any) {
 export default function Login() {
   const router = useRouter();
   const navigation = useNavigation();
-  navigation.setOptions({ title: "로그인" });
+  useLayoutEffect(() => {
+    navigation.setOptions({ title: "로그인" });
+  }, [navigation]);
+  
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
 

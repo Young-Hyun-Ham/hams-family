@@ -2,12 +2,14 @@
 import { listPosts, removePost } from "@/src/features/posts/postRepo";
 import type { Post } from "@/src/features/posts/types";
 import { useNavigation } from "expo-router";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { FlatList, Pressable, RefreshControl, Text, View } from "react-native";
 
 export default function Posts() {
   const navigation = useNavigation();
-  navigation.setOptions({ title: "추억" });
+  useLayoutEffect(() => {
+    navigation.setOptions({ title: "추억" });
+  }, [navigation]);
 
   const [items, setItems] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
