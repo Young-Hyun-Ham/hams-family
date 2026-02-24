@@ -4,7 +4,7 @@ export type LinkAction =
   | { type: "external"; url: string }
   | { type: "blocked"; reason: string };
 
-// ✅ 링크 정책: app://, http(s):// 만 허용
+// 링크 정책: app://, http(s):// 만 허용
 export function classifyHref(href: string): LinkAction {
   const raw = (href ?? "").trim();
   if (!raw) return { type: "blocked", reason: "empty" };

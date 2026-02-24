@@ -42,6 +42,7 @@ export type CreateRoomInput = {
   createdBy: string; // uid
   familyId?: "default";
   email?: string;
+  uid: string;
 };
 
 /**
@@ -49,7 +50,10 @@ export type CreateRoomInput = {
  * - Rules: 가족 멤버만 가능
  */
 export async function createRoom(input: CreateRoomInput) {
-  const familyId = input.familyId ?? "default";
+  if (!input.uid) {
+    throw new Error("familyId is required. (default 사용 금지)");
+  }
+  const familyId = input.uid;
   const roomRef = input.roomId
     ? doc(db, "chatRooms", input.roomId)
     : doc(collection(db, "chatRooms"));
@@ -81,7 +85,7 @@ export async function createRoom(input: CreateRoomInput) {
     Array.from(new Set(input.memberUids)).map((uid) =>
       setDoc(doc(db, "chatRooms", roomId, "members", uid), {
         uid,
-        role: uid === input.createdBy ? "admin" : "member",
+        role: uid === input.createdBy ? "owner" : "member",
         joinedAt: serverTimestamp(),
       }),
     ),

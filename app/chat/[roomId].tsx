@@ -164,7 +164,7 @@ export default function ChatRoomScreen() {
         renderItem={({ item }) => {
           const t = item.type ?? "user";
 
-          // ✅ 시스템 메시지: 중앙 pill
+          // 시스템 메시지: 중앙 pill
           if (t === "system") {
             return (
               <View style={{ alignItems: "center", marginVertical: 6 }}>
@@ -192,7 +192,7 @@ export default function ChatRoomScreen() {
             );
           }
 
-          // ✅ 일반 메시지 (기존 로직)
+          // 일반 메시지 (기존 로직)
           const mine = item.senderId === myUid;
 
           return (

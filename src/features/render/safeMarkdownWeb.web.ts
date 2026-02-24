@@ -14,7 +14,7 @@ function isAllowedImageSrc(src: string) {
 export function renderSafeHtmlFromMarkdown(md: string): string {
   let processedMd = md ?? "";
 
-  // ✅ 1. ![정렬](내용) 패턴 처리 - 정규식 수정
+  // 1. ![정렬](내용) 패턴 처리 - 정규식 수정
   // [.*?\] : 탐욕적이지 않게 가장 가까운 닫는 대괄호를 찾음
   // \(([\s\S]*?)\)(?!\)) : 괄호 내부 내용을 다 가져오되, 이미지 마크다운의 닫는 괄호와 혼동하지 않도록 함
   processedMd = processedMd.replace(
@@ -32,7 +32,7 @@ export function renderSafeHtmlFromMarkdown(md: string): string {
             : "flex-start"
       }; text-align: ${alignment};`;
 
-      // ✅ [중요] 이미지 마크다운 인식 로직 보강
+      // [중요] 이미지 마크다운 인식 로직 보강
       // 이미지 마크다운은 보통 ![alt](url) 형태이므로 이를 먼저 검사
       const imageRegex = /!\[(.*?)\]\((.*?)\)/;
       const imageMatch = innerContent.match(imageRegex);

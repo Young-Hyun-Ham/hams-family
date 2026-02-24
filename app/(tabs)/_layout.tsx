@@ -7,7 +7,7 @@ import { Text, View } from "react-native";
 export default function TabsLayout() {
   const { user } = useAuth();
   return (
-    <Tabs screenOptions={{ headerTitleAlign: "center" }}>
+    <Tabs screenOptions={{ headerTitleAlign: "left" }}>
       <Tabs.Screen
         name="home"
         options={{

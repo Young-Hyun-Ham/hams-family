@@ -10,7 +10,9 @@ import {
   ActivityIndicator,
   Linking,
   Platform,
+  Pressable,
   ScrollView,
+  Text,
   View,
 } from "react-native";
 
@@ -56,13 +58,13 @@ export default function UserfamScreen() {
 
   const md = family?.bodyMarkdown ?? "";
 
-  // ✅ 웹용 safeHtml
+  // 웹용 safeHtml
   const safeHtml = useMemo(() => {
     if (Platform.OS !== "web") return "";
     return renderSafeHtmlFromMarkdown(md);
   }, [md]);
 
-  // ✅ 웹 링크 클릭 정책(이벤트 위임)
+  // 웹 링크 클릭 정책(이벤트 위임)
   useEffect(() => {
     if (Platform.OS !== "web") return;
     const el = webContainerRef.current;
@@ -100,7 +102,7 @@ export default function UserfamScreen() {
     }
 
     if (action.type === "external") {
-      // ✅ 네이티브 외부 링크
+      // 네이티브 외부 링크
       const can = await Linking.canOpenURL(action.url);
       if (can) await Linking.openURL(action.url);
       return;
@@ -110,10 +112,44 @@ export default function UserfamScreen() {
   }
 
   return (
-    <View style={{ flex: 1, padding: 16, gap: 10 }}>
-      <View style={{ flex: 1, backgroundColor: "#fff" }}>
+    <View
+      style={{ flex: 1, paddingHorizontal: 16, paddingVertical: 10, gap: 10 }}
+    >
+      <View style={{ flexDirection: "row", gap: 8 }}>
+        {[1, 2, 3, 4].map((num) => (
+          <Pressable
+            key={num}
+            style={({ pressed }) => [
+              {
+                flex: 1,
+                backgroundColor: pressed ? "#f0f0f0" : "#fff",
+                paddingVertical: 14,
+                borderRadius: 12,
+                alignItems: "center",
+                justifyContent: "center",
+                // 안드로이드 그림자 (Elevation)
+                elevation: 3,
+                // iOS 그림자
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.1,
+                shadowRadius: 4,
+                // 테두리는 아주 연하게
+                borderWidth: 1,
+                borderColor: "rgba(0,0,0,0.05)",
+              },
+            ]}
+          >
+            <Text style={{ color: "#333", fontWeight: "700", fontSize: 13 }}>
+              메뉴 {num}
+            </Text>
+          </Pressable>
+        ))}
+      </View>
+
+      <View style={{ flex: 1, padding: 2, backgroundColor: "#fff" }}>
         {/* 본문 */}
-        {/* ✅ 카드 박스 (고정 높이) */}
+        {/* 카드 박스 (고정 높이) */}
         <View
           style={{
             flex: 1,
@@ -142,7 +178,7 @@ export default function UserfamScreen() {
               dangerouslySetInnerHTML={{ __html: safeHtml }}
             />
           ) : (
-            // ✅ 네이티브: 카드 내부 ScrollView + Markdown 렌더
+            // 네이티브: 카드 내부 ScrollView + Markdown 렌더
             <ScrollView
               style={{ flex: 1 }}
               contentContainerStyle={{ paddingBottom: 16 }}

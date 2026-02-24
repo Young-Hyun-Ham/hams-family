@@ -4,10 +4,12 @@ import {
   collection,
   doc,
   getDocs,
+  limit,
   orderBy,
   query,
   serverTimestamp,
   setDoc,
+  where,
 } from "firebase/firestore";
 import { User } from "../user/types";
 
@@ -18,27 +20,22 @@ export type Family = {
   name: string;
 };
 
-const SAMPLE_BODY_MARKDOWN = `## 👨‍👩‍👧‍👦 우리 가족 앱에 오신 걸 환영해요!
+const SAMPLE_BODY_MARKDOWN = `## 팸앱에 오신 걸 환영해요!
+메인을 Markdown으로 꾸며보세요.
 
-이 앱은 **우리 가족만** 사용하는 공간이에요.  
-여기서는 아래 기능을 사용할 수 있어요:
-
-### ✅ 오늘 할 일
-- [ ] 가족 단톡방에서 안부 인사하기
-- [ ] 추억 페이지에 사진 1장 올리기
-- [ ] 이번 주 가족 일정 공유하기
-
-### 📌 공지사항
-- 초대 코드는 **가족장(Owner)**만 발급할 수 있어요.
-- 사진은 자동으로 Firebase Storage에 저장돼요.
-- 채팅은 실시간(onSnapshot)으로 동작해요.
-
-### 🔗 자주 쓰는 링크
-- [우리 가족 단톡방](app://chat)
-- [추억 타임라인](app://posts)
-
-> 문의/요청사항은 단톡방에 남겨줘 🙂
+> 문의/요청사항은 단톡방에 남겨줘.
 `;
+
+export async function getMyFamilyId(uid: string, type?: string) {
+  const q = query(
+    collection(db, "families"),
+    where("memberUids", "array-contains", uid),
+    limit(1),
+  );
+  const snap = await getDocs(q);
+  if (snap.empty) return null;
+  return snap.docs[0].id;
+}
 
 export async function listFamilies(): Promise<Family[]> {
   const q = query(collection(db, "families"), orderBy("name"));
@@ -102,7 +99,7 @@ export async function updateFamilyBodyMarkdown(params: {
 }
 
 /**
- * ✅ 이미지 업로드 → 다운로드 URL 반환
+ * 이미지 업로드 → 다운로드 URL 반환
  * - path: families/{familyId}/home/{timestamp}.jpg
  */
 export async function uploadFamilyHomeImage(params: {

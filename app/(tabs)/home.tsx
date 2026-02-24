@@ -84,13 +84,13 @@ export default function Home() {
 
   const md = family?.bodyMarkdown ?? "";
 
-  // ✅ 웹용 safeHtml
+  // 웹용 safeHtml
   const safeHtml = useMemo(() => {
     if (Platform.OS !== "web") return "";
     return renderSafeHtmlFromMarkdown(md);
   }, [md]);
 
-  // ✅ 웹 링크 클릭 정책(이벤트 위임)
+  // 웹 링크 클릭 정책(이벤트 위임)
   useEffect(() => {
     if (Platform.OS !== "web") return;
     const el = webContainerRef.current;
@@ -128,7 +128,7 @@ export default function Home() {
     }
 
     if (action.type === "external") {
-      // ✅ 네이티브 외부 링크
+      // 네이티브 외부 링크
       const can = await Linking.canOpenURL(action.url);
       if (can) await Linking.openURL(action.url);
       return;
@@ -158,7 +158,7 @@ export default function Home() {
         </View> */}
 
         {/* 본문 */}
-        {/* ✅ 카드 박스 (고정 높이) */}
+        {/* 카드 박스 (고정 높이) */}
         <View
           style={{
             flex: 1,
@@ -187,7 +187,7 @@ export default function Home() {
               dangerouslySetInnerHTML={{ __html: safeHtml }}
             />
           ) : (
-            // ✅ 네이티브: 카드 내부 ScrollView + Markdown 렌더
+            // 네이티브: 카드 내부 ScrollView + Markdown 렌더
             <ScrollView
               style={{ flex: 1 }}
               contentContainerStyle={{ paddingBottom: 16 }}

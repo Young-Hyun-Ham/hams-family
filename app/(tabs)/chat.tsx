@@ -83,10 +83,11 @@ export default function ChatList() {
             // MVP: “나 혼자 방”이라도 만들어서 목록에 뜨게 하자
             const { roomId } = await createRoom({
               type: "group",
-              title: "🧪 테스트 채팅",
-              memberUids: [user.uid], // 본인 포함 필수
+              title: `${user.displayName} 님의 채팅방`,
+              memberUids: [user.uid],
               email: user.email ?? "",
               createdBy: user.uid,
+              uid: user.uid,
             });
 
             router.push({ pathname: "/chat/[roomId]", params: { roomId } });

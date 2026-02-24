@@ -96,14 +96,14 @@ export default function HomeEdit() {
     const uri = asset.uri;
     const mimeType = asset.mimeType ?? "image/jpeg";
 
-    // ✅ 업로드
+    // 업로드
     const { url } = await uploadFamilyHomeImage({
       familyId,
       fileUri: uri,
       mimeType,
     });
 
-    // ✅ 마크다운 자동 삽입 (현재 커서 위치)
+    // 마크다운 자동 삽입 (현재 커서 위치)
     insertAtCursor(`\n\n![image](${url})\n\n`);
   }
 
@@ -227,7 +227,7 @@ export default function HomeEdit() {
             selection={selection}
           />
         ) : Platform.OS === "web" ? (
-          // ✅ 웹 미리보기: safeHtml
+          // 웹 미리보기: safeHtml
           <div
             ref={(n) => {
               webPreviewRef.current = n;
@@ -241,7 +241,7 @@ export default function HomeEdit() {
             dangerouslySetInnerHTML={{ __html: safeHtml }}
           />
         ) : (
-          // ✅ 네이티브 미리보기 수정
+          // 네이티브 미리보기 수정
           <ScrollView style={{ flex: 1 }}>
             {(() => {
               const { backgroundUrl, cleanMd } = parseAppMarkdown(md);
